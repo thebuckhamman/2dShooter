@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	public static ArrayList<Enemy> enemies;
 	public static ArrayList<PowerUp> powerups;
 	public static ArrayList<Explosion> explosions;
-	public static ArrayList<text> texts;
+	public static ArrayList<Text> texts;
 	
 	private long waveStartTimer;
 	private long waveStartTimerDiff;
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 		enemies = new ArrayList<Enemy>();
 		powerups = new ArrayList<PowerUp>();
 		explosions = new ArrayList<Explosion>();
-		texts = new ArrayList<text>();
+		texts = new ArrayList<Text>();
 		waveStartTimer = 0;
 		waveStartTimerDiff = 0;
 		 waveNumber = 0;
@@ -216,7 +216,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 			for(int j = 0;j<enemies.size();j++){
 				Enemy e = enemies.get(j);
 				
-				if (Distance(b,e) < b.getr() + e.getr()){
+				if (Distance(b,e) < b.getR() + e.getr()){
 					e.hit();
 					bullets.remove(i);
 					i--;
@@ -265,28 +265,28 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 		if(!player.isRecovering()){
 			for(int j = 0;j<powerups.size();j++){
 				PowerUp p = powerups.get(j);
-				if (Distance(player,p) < player.getr() + p.getr()){
+				if (Distance(player,p) < player.getr() + p.getR()){
 					
 					
 					//collected  power up
 					if(p.getType() ==PowerupType.HEALTH){
 						player.gainLife();
-						texts.add(new text((WIDTH / 2)-30, 20,2000, "Gained a Life"));
+						texts.add(new Text((WIDTH / 2)-30, 20,2000, "Gained a Life"));
 					}
 					if(p.getType() ==PowerupType.ONE_LEVEL){
 						player.increasePower(1);
-						texts.add(new text((WIDTH / 2)-30, 20,2000, "Power Plus 1"));
+						texts.add(new Text((WIDTH / 2)-30, 20,2000, "Power Plus 1"));
 					}
 					if(p.getType() ==PowerupType.TWO_LEVELS){
 						player.increasePower(2);
-						texts.add(new text((WIDTH / 2)-30, 20,2000, "Power Plus 2"));
+						texts.add(new Text((WIDTH / 2)-30, 20,2000, "Power Plus 2"));
 					}
 					if(p.getType() ==PowerupType.SLOW_TIME){
 						slowDownTimer = System.nanoTime();
 						for(int k = 0; k <enemies.size(); k++){
 								enemies.get(k).setSlow(true);
 						}
-						texts.add(new text((WIDTH / 2)-30, 20,2000, "Slow Time"));
+						texts.add(new Text((WIDTH / 2)-30, 20,2000, "Slow Time"));
 					}
 					
 					powerups.remove(j);
@@ -508,8 +508,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	}
 
 	public double Distance(Bullet b, Enemy e){
-		double dx = b.getx() - e.getx();
-		double dy = b.gety() - e.gety();
+		double dx = b.getX() - e.getx();
+		double dy = b.getY() - e.gety();
 		return  Math.sqrt(dx * dx + dy *dy);
 	}
 	public double Distance(Player p, Enemy e){
@@ -518,8 +518,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 		return  Math.sqrt(dx * dx + dy *dy);
 	}
 	public double Distance(Player p, PowerUp e){
-		double dx = p.getx() - e.getx();
-		double dy = p.gety() - e.gety();
+		double dx = p.getx() - e.getX();
+		double dy = p.gety() - e.getY();
 		return  Math.sqrt(dx * dx + dy *dy);
 	}
 	

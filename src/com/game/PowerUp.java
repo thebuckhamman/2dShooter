@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class PowerUp
+public class PowerUp implements Entity
 {
 
 	/**
@@ -43,49 +43,43 @@ public class PowerUp
 		if(type == PowerupType.HEALTH)
 		{
 			color1 = Color.RED;
-			r =3;
+			r = 3;
 		}
 		else if(type == PowerupType.ONE_LEVEL)
 		{
 			color1 = Color.YELLOW;
-			r =3;
+			r = 3;
 		}
 		else if(type == PowerupType.TWO_LEVELS)
 		{
 			color1 = new Color(0, 255, 255);
-			r =5;
+			r = 5;
 		}
 		else if(type == PowerupType.SLOW_TIME)
 		{
 			color1 = new Color(0, 255, 0);
-			r =3;
+			r = 3;
 		}
 	}
 
-	/**
-	 * Get the X location of the powerup
-	 * @return the X location of the powerup
-	 */
-	public double getx()
+	@Override
+	public double getX()
 	{
 		return _XLoc;
 	}
-	/**
-	 * Get the Y location of the powerup
-	 * @return the Y location of the powerup
-	 */
-	public double gety()
+	
+	@Override
+	public double getY()
 	{
 		return _YLoc;
 	}
-	/**
-	 * Get the R value of the powerup
-	 * @return the R valuve of the powerup
-	 */
-	public double getr()
+	
+	@Override
+	public double getR()
 	{
 		return r;
 	}
+	
 	/**
 	 * Get the type that the powerup is
 	 * @return the type the powerup is
@@ -95,35 +89,26 @@ public class PowerUp
 		return _Type;
 	}
 
-	/**
-	 * Called when the powerup needs to update
-	 * @return If the powerup should be removed
-	 */
-	public boolean update(){
-
+	@Override
+	public boolean update()
+	{
 		_YLoc += 2;
-
-		if(_YLoc>GamePanel.HEIGHT+r){
+		if(_YLoc>GamePanel.HEIGHT+r)
+		{
 			return true;
 		}
-
 		return false;
-
 	}
 
-	/**
-	 * When the Powerup needs to render
-	 * @param g The Graphics2D object that it will render on to
-	 */
-	public void draw(Graphics2D g){
-
+	@Override
+	public void draw(Graphics2D g)
+	{
 		g.setColor(color1);
 		g.fillRect((int)(_XLoc-(2*r)), (int)(_YLoc-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(3));
 		g.setColor(color1.darker());
 		g.drawRect((int)(_XLoc-(2*r)), (int)(_YLoc-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(1));
-
 	}
 
 }
