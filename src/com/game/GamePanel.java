@@ -1,18 +1,25 @@
 package com.game;
-import javax.swing.JPanel;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
+
+import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
 	//fields
-	public static int WIDTH = 400;
-	public static int HEIGHT= 400;
+	public static int WIDTH = 800;
+	public static int HEIGHT= 800;
 	private Thread thread;
 	private boolean running;
 	
@@ -380,6 +387,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 			g.fillRect(WIDTH - 100,30,(int)(100 - 100.0 * slowDownTimerDiff / slowDownLength), 8 );
 		}
 		
+		//draw wave #
+		g.setColor(Color.WHITE);
+		String waveText = "W A V E " + waveNumber;
+		int length = (int) g.getFontMetrics().getStringBounds(waveText, g).getWidth();
+		g.drawString(waveText, WIDTH / 2 - length /2, 20);
+		
 	}
 	//Draws completed image to the screen
 	private void gameDraw(){
@@ -390,68 +403,102 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	private void createNewEnemies(){
 		enemies.clear();
-		Enemy e;
 		if(waveNumber == 1){
 			for(int i = 0; i<4;i++){
-				enemies.add(new Enemy(1,1));
+				enemies.add(createEnemy(1,1));
 			}
 		}
 		if(waveNumber == 2){
 			for(int i = 0; i<8;i++){
-				enemies.add(new Enemy(1,1));
+				enemies.add(createEnemy(1,1));
 			}
-			enemies.add(new Enemy(1,2));
-			enemies.add(new Enemy(1,2));
+			enemies.add(createEnemy(1,2));
+			enemies.add(createEnemy(1,2));
 		}
 		if(waveNumber == 3){
-			enemies.add(new Enemy(1,3));
-			enemies.add(new Enemy(1,3));
-			enemies.add(new Enemy(1,4));
+			enemies.add(createEnemy(1,3));
+			enemies.add(createEnemy(1,3));
+			enemies.add(createEnemy(1,4));
 		}
 		if(waveNumber == 4){
-			running = false;
+			enemies.add(createEnemy(2,2));
+			enemies.add(createEnemy(3,2));
+		}
+		if(waveNumber >= 5){
+			Random r = new Random();
+			for(int i = 0; i < waveNumber; i++)
+			{
+				enemies.add(createEnemy(r.nextInt(3) + 1, r.nextInt(3) + 1));
+			}
 		}
 	}
 	
+	private Enemy createEnemy(int type, int level)
+	{
+		try{
+			return new Enemy(type, level);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public void keyPressed(KeyEvent key) {
 		int keyCode = key.getKeyCode();
-		if(keyCode ==KeyEvent.VK_LEFT){
+		if(keyCode ==KeyEvent.VK_A){
 			player.setLeft(true);
 		}
-		if(keyCode ==KeyEvent.VK_RIGHT){
+		if(keyCode ==KeyEvent.VK_D){
 			player.setRight(true);
 		}
-		if(keyCode ==KeyEvent.VK_UP){
+		if(keyCode ==KeyEvent.VK_W){
 			player.setUp(true);
 		}
-		if(keyCode ==KeyEvent.VK_DOWN){
+		if(keyCode ==KeyEvent.VK_S){
 			player.setDown(true);
 		}
-		if(keyCode ==KeyEvent.VK_Z){
-			player.setFiring(true);
+		if(keyCode ==KeyEvent.VK_UP){
+			player.setFiringNorth(true);
+		}
+		if(keyCode ==KeyEvent.VK_DOWN){
+			player.setFiringSouth(true);
+		}
+		if(keyCode ==KeyEvent.VK_LEFT){
+			player.setFiringWest(true);
+		}
+		if(keyCode ==KeyEvent.VK_RIGHT){
+			player.setFiringEast(true);
 		}
 	}
 
 	
 	public void keyReleased(KeyEvent key) {
 		int keyCode = key.getKeyCode();
-		if(keyCode ==KeyEvent.VK_LEFT){
+		if(keyCode ==KeyEvent.VK_A){
 			player.setLeft(false);
 		}
-		if(keyCode ==KeyEvent.VK_RIGHT){
+		if(keyCode ==KeyEvent.VK_D){
 			player.setRight(false);
 		}
-		if(keyCode ==KeyEvent.VK_UP){
+		if(keyCode ==KeyEvent.VK_W){
 			player.setUp(false);
 		}
-		if(keyCode ==KeyEvent.VK_DOWN){
+		if(keyCode ==KeyEvent.VK_S){
 			player.setDown(false);
 		}
-		if(keyCode ==KeyEvent.VK_Z){
-			player.setFiring(false);
+		if(keyCode ==KeyEvent.VK_UP){
+			player.setFiringNorth(false);
 		}
-		
+		if(keyCode ==KeyEvent.VK_DOWN){
+			player.setFiringSouth(false);
+		}
+		if(keyCode ==KeyEvent.VK_LEFT){
+			player.setFiringWest(false);
+		}
+		if(keyCode ==KeyEvent.VK_RIGHT){
+			player.setFiringEast(false);
+		}
 	}
 
 	
