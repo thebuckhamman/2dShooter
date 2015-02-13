@@ -22,7 +22,7 @@ public class PowerUp {
 		this.y = y;
 		
 		if(type == 1){
-			color1 = Color.PINK;
+			color1 = Color.CYAN;
 			r =3;
 		}
 		if(type == 2){
@@ -30,11 +30,11 @@ public class PowerUp {
 			r =3;
 		}
 		if(type == 3){
-			color1 = Color.YELLOW;
+			color1 = new Color(0, 255, 255);
 			r =5;
 		}
 		if(type == 4){
-			color1 = Color.WHITE;
+			color1 = new Color(0, 255, 0);
 			r =3;
 		}
 		
@@ -69,10 +69,10 @@ public class PowerUp {
 	public void draw(Graphics2D g){
 		
 		g.setColor(color1);
-		g.fillRect((int)(x-r), (int)(y-r), 2*r, 2*r);
+		g.fillRect((int)(x-(2*r)), (int)(y-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(3));
 		g.setColor(color1.darker());
-		g.drawRect((int)(x-r), (int)(y-r), 2*r, 2*r);
+		g.drawRect((int)(x-(2*r)), (int)(y-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(1));
 		
 	}
