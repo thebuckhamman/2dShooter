@@ -4,77 +4,126 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class PowerUp {
+public class PowerUp
+{
 
-	private double x;
-	private double y;
+	/**
+	 * The X location of the powerup
+	 */
+	private double _XLoc;
+	/**
+	 * The Y location of the powerup
+	 */
+	private double _YLoc;
+	/**
+	 * Not sure what this is for, but it is used
+	 */
 	int r;
-	private int type;
+	/**
+	 * What type of powerup this is
+	 */
+	private PowerupType _Type;
+	/**
+	 * What color this powerup is
+	 */
 	private Color color1;
-	
-	//1 -- +1 life
-	//2 -- +1 power
-	//3 -- +2 power
-	//4 -- slow down time
-	public PowerUp(int type, double x, double y){
-		this. type = type;
-		this.x = x;
-		this.y = y;
-		
-		if(type == 1){
-			color1 = Color.CYAN;
+
+	/**
+	 * Initialize a powerup
+	 * @param type What type of powerup this powerup is.
+	 * @param x The initial X location of the powerup
+	 * @param y The initial Y location of the powerup
+	 */
+	public PowerUp(PowerupType type, double x, double y)
+	{
+		_Type = type;
+		_XLoc = x;
+		_YLoc = y;
+
+		if(type == PowerupType.HEALTH)
+		{
+			color1 = Color.RED;
 			r =3;
 		}
-		if(type == 2){
+		else if(type == PowerupType.ONE_LEVEL)
+		{
 			color1 = Color.YELLOW;
 			r =3;
 		}
-		if(type == 3){
+		else if(type == PowerupType.TWO_LEVELS)
+		{
 			color1 = new Color(0, 255, 255);
 			r =5;
 		}
-		if(type == 4){
+		else if(type == PowerupType.SLOW_TIME)
+		{
 			color1 = new Color(0, 255, 0);
 			r =3;
 		}
-		
 	}
-	
-	public double getx(){
-		return x;
+
+	/**
+	 * Get the X location of the powerup
+	 * @return the X location of the powerup
+	 */
+	public double getx()
+	{
+		return _XLoc;
 	}
-	public double gety(){
-		return y;
+	/**
+	 * Get the Y location of the powerup
+	 * @return the Y location of the powerup
+	 */
+	public double gety()
+	{
+		return _YLoc;
 	}
-	public double getr(){
+	/**
+	 * Get the R value of the powerup
+	 * @return the R valuve of the powerup
+	 */
+	public double getr()
+	{
 		return r;
 	}
-	public int getType(){
-		return type;
+	/**
+	 * Get the type that the powerup is
+	 * @return the type the powerup is
+	 */
+	public PowerupType getType()
+	{
+		return _Type;
 	}
-	
-	
+
+	/**
+	 * Called when the powerup needs to update
+	 * @return If the powerup should be removed
+	 */
 	public boolean update(){
-		
-		y += 2;
-		
-		if(y>GamePanel.HEIGHT+r){
+
+		_YLoc += 2;
+
+		if(_YLoc>GamePanel.HEIGHT+r){
 			return true;
 		}
-		
+
 		return false;
-		
+
 	}
-	
+
+	/**
+	 * When the Powerup needs to render
+	 * @param g The Graphics2D object that it will render on to
+	 */
 	public void draw(Graphics2D g){
-		
+
 		g.setColor(color1);
-		g.fillRect((int)(x-(2*r)), (int)(y-(2*r)), 4*r, 4*r);
+		g.fillRect((int)(_XLoc-(2*r)), (int)(_YLoc-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(3));
 		g.setColor(color1.darker());
-		g.drawRect((int)(x-(2*r)), (int)(y-(2*r)), 4*r, 4*r);
+		g.drawRect((int)(_XLoc-(2*r)), (int)(_YLoc-(2*r)), 4*r, 4*r);
 		g.setStroke(new BasicStroke(1));
-		
+
 	}
-	
+
 }

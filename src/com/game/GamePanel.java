@@ -231,10 +231,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 					
 					//chance for powerup
 					double rand = Math.random();
-					if(rand < 0.001) powerups.add(new PowerUp(1,e.getx(),e.gety()));
-					else if(rand < 0.120) powerups.add(new PowerUp(2,e.getx(),e.gety()));
-					else if(rand < 0.020) powerups.add(new PowerUp(3,e.getx(),e.gety()));
-					else if(rand < 0.130) powerups.add(new PowerUp(4,e.getx(),e.gety()));
+					if(rand < 0.001) powerups.add(new PowerUp(PowerupType.HEALTH,e.getx(),e.gety()));
+					else if(rand < 0.120) powerups.add(new PowerUp(PowerupType.ONE_LEVEL,e.getx(),e.gety()));
+					else if(rand < 0.020) powerups.add(new PowerUp(PowerupType.TWO_LEVELS,e.getx(),e.gety()));
+					else if(rand < 0.130) powerups.add(new PowerUp(PowerupType.SLOW_TIME,e.getx(),e.gety()));
 					player.addScore((e.getType() + e.getRank())*5);
 					enemies.remove(j);
 					j--;
@@ -269,19 +269,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 					
 					
 					//collected  power up
-					if(p.getType() ==1){
+					if(p.getType() ==PowerupType.HEALTH){
 						player.gainLife();
 						texts.add(new text((WIDTH / 2)-30, 20,2000, "Gained a Life"));
 					}
-					if(p.getType() ==2){
+					if(p.getType() ==PowerupType.ONE_LEVEL){
 						player.increasePower(1);
 						texts.add(new text((WIDTH / 2)-30, 20,2000, "Power Plus 1"));
 					}
-					if(p.getType() ==3){
+					if(p.getType() ==PowerupType.TWO_LEVELS){
 						player.increasePower(2);
 						texts.add(new text((WIDTH / 2)-30, 20,2000, "Power Plus 2"));
 					}
-					if(p.getType() ==4){
+					if(p.getType() ==PowerupType.SLOW_TIME){
 						slowDownTimer = System.nanoTime();
 						for(int k = 0; k <enemies.size(); k++){
 								enemies.get(k).setSlow(true);
