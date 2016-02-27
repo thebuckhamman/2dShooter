@@ -167,8 +167,8 @@ public class Player {
 					GamePanel.bullets.add(new Bullet(90,x-5,y));
 				}else{
 					GamePanel.bullets.add(new Bullet(90,x,y));
-					GamePanel.bullets.add(new Bullet(95,x+5,y));
-					GamePanel.bullets.add(new Bullet(85,x-5,y));
+					GamePanel.bullets.add(new Bullet(85,x+5,y));
+					GamePanel.bullets.add(new Bullet(95,x-5,y));
 				}
 			}
 		}
@@ -186,8 +186,8 @@ public class Player {
 					GamePanel.bullets.add(new Bullet(180,x,y-5));
 				}else{
 					GamePanel.bullets.add(new Bullet(180,x,y));
-					GamePanel.bullets.add(new Bullet(185,x,y+5));
-					GamePanel.bullets.add(new Bullet(175,x,y-5));
+					GamePanel.bullets.add(new Bullet(175,x,y+5));
+					GamePanel.bullets.add(new Bullet(185,x,y-5));
 				}
 			}
 		}
